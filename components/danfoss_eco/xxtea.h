@@ -1,6 +1,8 @@
 #pragma once
 
-#include <xxtea-lib.h>
+#include <cstddef>
+#include <cstdint>
+#include "xxtea-lib.h"
 
 // key Size is always fixed
 #define MAX_XXTEA_KEY8 16

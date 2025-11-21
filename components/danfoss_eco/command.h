@@ -1,5 +1,6 @@
 #pragma once
 
+#include "esphome/core/lock_free_queue.h"
 #include "esphome/components/esp32_ble_tracker/esp32_ble_tracker.h"
 
 #include "properties.h"
@@ -35,10 +36,10 @@ namespace esphome
             }
         };
 
-        class CommandQueue : public esphome::esp32_ble_tracker::Queue<Command>
+        class CommandQueue : public esphome::LockFreeQueue<Command, MAX_BLE_QUEUE_SIZE>
         {
         public:
-            bool is_empty() { return this->q_.empty(); }
+            bool is_empty() { return this->empty(); }
         };
 
     } // namespace danfoss_eco

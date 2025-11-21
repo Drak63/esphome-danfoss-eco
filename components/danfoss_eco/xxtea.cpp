@@ -1,5 +1,6 @@
+#include <cstring>
 #include "xxtea.h"
-#include <xxtea_core.h>
+#include "xxtea_core.h"
 
 int Xxtea::set_key(uint8_t *key, size_t len)
 {
