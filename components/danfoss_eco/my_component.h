@@ -3,6 +3,7 @@
 #include "esphome/core/component.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/binary_sensor/binary_sensor.h"
+#include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/components/climate/climate.h"
 
 #include "helpers.h"
@@ -15,6 +16,7 @@ namespace esphome
         using namespace esphome::climate;
         using namespace esphome::sensor;
         using namespace esphome::binary_sensor;
+        using namespace esphome::text_sensor;
 
         class MyComponent : public Climate, public PollingComponent, public enable_shared_from_this<MyComponent>
         {
@@ -37,10 +39,12 @@ namespace esphome
             void set_battery_level(Sensor *battery_level) { battery_level_ = battery_level; }
             void set_temperature(Sensor *temperature) { temperature_ = temperature; }
             void set_problems(BinarySensor *problems) { problems_ = problems; }
+            void set_problems_detail(TextSensor *problems_detail) { problems_detail_ = problems_detail; }
 
             Sensor *battery_level() { return this->battery_level_; }
             Sensor *temperature() { return this->temperature_; }
             BinarySensor *problems() { return this->problems_; }
+            TextSensor *problems_detail() { return this->problems_detail_; }
 
             virtual void set_secret_key(uint8_t *, bool) = 0;
 
@@ -48,6 +52,7 @@ namespace esphome
             Sensor *battery_level_{nullptr};
             Sensor *temperature_{nullptr};
             BinarySensor *problems_{nullptr};
+            TextSensor *problems_detail_{nullptr};
         };
 
     } // namespace danfoss_eco

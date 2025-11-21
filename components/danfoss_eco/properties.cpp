@@ -128,6 +128,38 @@ namespace esphome
             // TODO: it would be great to add actual error code to binary_sensor state attributes, but I'm not sure how to achieve that
             if (this->component_->problems() != nullptr)
                 this->component_->problems()->publish_state(e_data->E9_VALVE_DOES_NOT_CLOSE || e_data->E10_INVALID_TIME || e_data->E14_LOW_BATTERY || e_data->E15_VERY_LOW_BATTERY);
+            
+            string problems = "";
+
+            if (e_data->E9_VALVE_DOES_NOT_CLOSE)
+                problems += "Valve Stuck";
+            
+            if (e_data->E10_INVALID_TIME)
+            {
+                if (problems.size() > 0)
+                    problems += " | ";
+                
+                problems += "Invalid Time";
+            }
+
+            if (e_data->E14_LOW_BATTERY)
+            {
+                if (problems.size() > 0)
+                    problems += " | ";
+                
+                problems += "Low Battery";
+            }
+
+            if (e_data->E15_VERY_LOW_BATTERY)
+            {
+                if (problems.size() > 0)
+                    problems += " | ";
+                
+                problems += "Very Low Battery";
+            }
+
+            if (this->component_->problems_detail() != nullptr)
+                this->component_->problems_detail()->publish_state(problems);
         }
 
         bool SecretKeyProperty::init_handle(BLEClient *client)

@@ -34,6 +34,7 @@ namespace esphome
         LOG_SENSOR("", "Battery Level", this->battery_level_);
         LOG_SENSOR("", "Room Temperature", this->temperature_);
         LOG_BINARY_SENSOR("", "Problems", this->problems_);
+        LOG_TEXT_SENSOR("", "Problems (Detail)", this->problems_detail_);
       }
 
       void setup() override;
