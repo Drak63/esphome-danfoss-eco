@@ -14,6 +14,7 @@
 #ifdef USE_ESP32
 
 #include <esp_gattc_api.h>
+#include <set>
 
 namespace esphome
 {

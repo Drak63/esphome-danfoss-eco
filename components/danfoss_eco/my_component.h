@@ -26,13 +26,15 @@ namespace esphome
             ClimateTraits traits() override
             {
                 auto traits = ClimateTraits();
-                traits.set_supports_current_temperature(true);
 
-                traits.set_supported_modes(set<ClimateMode>({ClimateMode::CLIMATE_MODE_HEAT, ClimateMode::CLIMATE_MODE_AUTO}));
+                // supports reporting current temperature
+                traits.add_feature_flags(CLIMATE_SUPPORTS_CURRENT_TEMPERATURE);
+                // supports reporting current action
+                traits.add_feature_flags(CLIMATE_SUPPORTS_ACTION);
+
+                traits.add_supported_mode(ClimateMode::CLIMATE_MODE_HEAT);
+                traits.add_supported_mode(ClimateMode::CLIMATE_MODE_AUTO);
                 traits.set_visual_temperature_step(0.5);
-
-                traits.set_supports_current_temperature(true); // supports reporting current temperature
-                traits.set_supports_action(true);              // supports reporting current action
                 return traits;
             }
 
