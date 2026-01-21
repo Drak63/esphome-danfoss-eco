@@ -38,6 +38,8 @@ namespace esphome
                 return traits;
             }
 
+            void set_visual_min_temperature_override(float);
+            void set_visual_max_temperature_override(float);
             void set_battery_level(Sensor *battery_level) { battery_level_ = battery_level; }
             void set_temperature(Sensor *temperature) { temperature_ = temperature; }
             void set_problems(BinarySensor *problems) { problems_ = problems; }
