@@ -12,11 +12,25 @@ namespace esphome
     {
         bool DeviceProperty::init_handle(BLEClient *client)
         {
-            ESP_LOGV(TAG, "[%s] resolving handler for service=%s, characteristic=%s", this->component_->get_name().c_str(), this->service_uuid.to_string().c_str(), this->characteristic_uuid.to_str().c_str());
+            char service_uuid_str[37];
+            char characteristic_uuid_str[37];
+
+            this->service_uuid.to_str(service_uuid_str);
+            this->characteristic_uuid.to_str(characteristic_uuid_str);
+
+            ESP_LOGV(TAG,
+                     "[%s] resolving handler for service=%s, characteristic=%s",
+                     this->component_->get_name().c_str(),
+                     service_uuid_str,
+                     characteristic_uuid_str);
+
             auto chr = client->get_characteristic(this->service_uuid, this->characteristic_uuid);
             if (chr == nullptr)
             {
-                ESP_LOGW(TAG, "[%s] characteristic uuid=%s not found", this->component_->get_name().c_str(), this->characteristic_uuid.to_str().c_str());
+                ESP_LOGW(TAG,
+                         "[%s] characteristic uuid=%s not found",
+                         this->component_->get_name().c_str(),
+                         characteristic_uuid_str);
                 return false;
             }
 
