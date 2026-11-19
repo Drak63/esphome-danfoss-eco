@@ -3,6 +3,7 @@
 
 #include "properties.h"
 #include "helpers.h"
+#include <algorithm>
 
 #ifdef USE_ESP32
 
@@ -52,8 +53,15 @@ namespace esphome
 
         bool WritableProperty::write_request(BLEClient *client, uint8_t *data, uint16_t data_len)
         {
-            ESP_LOGD(TAG, "[%s] write_request: handle=%#04x, data=%s", this->component_->get_name().c_str(), this->handle, format_hex_pretty(data, data_len).c_str());
+            char hex_buffer[format_hex_pretty_size(64)];
+            size_t log_len = std::min(static_cast<size_t>(data_len), size_t(64));
+            format_hex_pretty_to(hex_buffer, sizeof(hex_buffer), data, log_len);
 
+            ESP_LOGD(TAG, "[%s] write_request: handle=%#04x, data=%s%s",
+                     this->component_->get_name().c_str(),
+                     this->handle,
+                     hex_buffer,
+                     data_len > log_len ? "..." : "");
             auto status = esp_ble_gattc_write_char(client->get_gattc_if(),
                                                    client->get_conn_id(),
                                                    this->handle,
